@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Resume Overview</title>
+</head>
+<body>
+    <style>
+        /* General Reset */
+body, h1, h2, h3, p, ul {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.5;
+    color: #333;
+}
+
+/* Body Styling */
+body {
+    background-color: #f7f9fc;
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+/* Container */
+.resume-container {
+    background: #ffffff;
+    width: 800px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Section */
+.resume-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px 8px 0 0;
+}
+
+.personal-info {
+    text-align: center;
+}
+
+.personal-info h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.personal-info h3 {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+    color: #ecf0f1;
+}
+
+.personal-info p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #bdc3c7;
+}
+
+/* Section Styling */
+.section {
+    margin-top: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.section h2 {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    border-left: 5px solid #3498db;
+    padding-left: 10px;
+}
+
+/* Skills */
+.skills-list {
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.skills-list li {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Projects */
+.projects-list {
+    display: grid;
+    gap: 20px;
+}
+
+.project-item {
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Education & Experience */
+.education-item, .experience-item {
+    margin-bottom: 15px;
+}
+
+/* Extras */
+.extras-list {
+    display: grid;
+    gap: 20px;
+}
+
+.extra-item {
+    padding: 15px;
+    border-radius: 5px;
+}
+
+    </style>
+    <div class="resume-container">
+        <span><a href={% url 'personal' %}>EDIT<i class="fa-solid fa-left-long"></i></a></span>
+
+        <!-- Header Section for Personal Information -->
+        <header class="resume-header">
+            <div class="personal-info">
+                <h1>{{ personal.fullname }}</h1>
+                <h3>{{ personal.position }}</h3>
+                <p><i class="fas fa-phone"></i> {{ personal.mobilenumber }}</p>
+                <p><i class="fas fa-envelope"></i> {{ personal.email }}</p>
+                <p><i class="fas fa-map-marker-alt"></i> {{ personal.state }}</p>
+            </div>
+        </header>
+
+        <!-- Summary -->
+        <section class="section summary-section">
+            <h2>Professional Summary</h2>
+            <p>{{ summary.summary }}</p>
+        </section>
+
+        <!-- Skills -->
+        <section class="section skills-section">
+            <h2>Key Skills</h2>
+            <ul class="skills-list">
+                {% for skill in skills %}
+                    <li>{{ skill.name }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- Projects -->
+        <section class="section projects-section">
+            <h2>Projects</h2>
+            <div class="projects-list">
+                {% for project in projects %}
+                    <div class="project-item">
+                        <h3>{{ project.project_name }}</h3>
+                        <p>{{ project.project_desc1 }}</p>
+                        <p>{{ project.project_desc2 }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="section education-section">
+            <h2>Education</h2>
+            <div class="education-item">
+                <p><strong>School:</strong> {{ education.school_name }}</p>
+                <p><strong>Qualification:</strong> {{ education.qualification }}</p>
+                <p><strong>Graduated:</strong> {{ education.passed_out }}</p>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        {% if experience  %}
+        <section class="section experience-section">
+            <h2>Experience</h2>
+            <div class="experience-list">
+                {% for exp in experience %}
+                    <div class="experience-item">
+                        <p><strong>Company:</strong> {{ exp.company_name }}</p>
+                        <p><strong>Duration:</strong> {{ exp.duration }}</p>
+                        <p><strong>Position:</strong> {{ exp.position }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Extras -->
+        {% if extras %}
+        <section class="section extras-section">
+            <h2>Additional Information</h2>
+            <div class="extras-list">
+                {% for extra in extras %}
+                    <div class="extra-item">
+                        <p><strong>Language:</strong> {{ extra.language }}</p>
+                        <p><strong>Certifications:</strong> {{ extra.certifications }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+    </div>
+</body>
+</html>
